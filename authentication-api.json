@@ -1,0 +1,100 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "dev-authorization",
+    "version" : "2023-10-22 14:37:30UTC"
+  },
+  "servers" : [ {
+    "url" : "https://wpitfj7ph8.execute-api.us-east-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : ""
+      }
+    }
+  } ],
+  "tags" : [ {
+    "name" : "STAGE",
+    "x-amazon-apigateway-tag-value" : "dev"
+  } ],
+  "paths" : {
+    "/verify" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /verify"
+          }
+        },
+        "security" : [ {
+          "jwtAuthorizer" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:018486252290:function:authorization-dev-verify/invocations",
+          "connectionType" : "INTERNET",
+          "timeoutInMillis" : 30000
+        }
+      }
+    },
+    "/login" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /login"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:018486252290:function:authorization-dev-login/invocations",
+          "connectionType" : "INTERNET",
+          "timeoutInMillis" : 30000
+        }
+      }
+    },
+    "/sign-up" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /sign-up"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:018486252290:function:authorization-dev-sign-up/invocations",
+          "connectionType" : "INTERNET",
+          "timeoutInMillis" : 30000
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "jwtAuthorizer" : {
+        "type" : "apiKey",
+        "name" : "Unused",
+        "in" : "header",
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "",
+          "authorizerUri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:018486252290:function:jwt-authorizer-dev-jwt-authorizer/invocations",
+          "authorizerPayloadFormatVersion" : "2.0",
+          "authorizerResultTtlInSeconds" : -42,
+          "type" : "request",
+          "enableSimpleResponses" : false
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-cors" : {
+    "allowMethods" : [ "GET", "OPTIONS", "POST" ],
+    "allowHeaders" : [ "authorization", "content-type", "x-amz-date", "x-amz-security-token", "x-amz-user-agent", "x-amzn-trace-id", "x-api-key" ],
+    "maxAge" : -42,
+    "allowCredentials" : false,
+    "allowOrigins" : [ "*" ]
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}
