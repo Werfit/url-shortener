@@ -1,0 +1,28 @@
+org: werfit
+app: typescript-http-api
+service: mail-sender
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    SENDER_EMAIL: "iskenderov.vsl@gmail.com"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+      Resource: "*"
+
+
+functions:
+  mail-sender:
+    handler: handler.sendMail
+    events:
+      - stream:
+          type: dynamodb
+          arn: arn:aws:dynamodb:us-east-1:018486252290:table/url-hash-dev/stream/2023-10-22T20:03:24.424
+
+plugins:
+  - serverless-plugin-typescript

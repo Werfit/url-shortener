@@ -1,0 +1,83 @@
+{
+  "resource": "/{proxy+}",
+  "path": "/verify",
+  "httpMethod": "GET",
+  "headers": {
+    "accept": "*/*",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE2OTc5MjA1OTUsImV4cCI6MTY5NzkyNDE5NX0.MVVkMsqa1qAO7lpAOb8srYaPC6cBqudTbCH4HmZ-KtI",
+    "content-type": "application/x-www-form-urlencoded",
+    "Host": "myapi.example.com",
+    "User-Agent": "curl/7.58.0",
+    "X-Amzn-Trace-Id": "Root=1-5f2330a4-6a0de1cd0e17c0508d386a64",
+    "X-Forwarded-For": "203.0.113.203",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "accept": [
+      "*/*"
+    ],
+    "Authorization": [
+      "Bearer REDACTED"
+    ],
+    "content-type": [
+      "application/x-www-form-urlencoded"
+    ],
+    "Host": [
+      "myapi.example.com"
+    ],
+    "User-Agent": [
+      "curl/7.58.0"
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-5f2330a4-6a0de1cd0e17c0508d386a64"
+    ],
+    "X-Forwarded-For": [
+      "203.0.113.203"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "proxy": "post"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "vwlzdc",
+    "resourcePath": "/{proxy+}",
+    "httpMethod": "POST",
+    "extendedRequestId": "QgSJzFCwPHcFoZQ=",
+    "requestTime": "30/Jul/2020:20:42:13 +0000",
+    "path": "/post",
+    "accountId": "123456789012",
+    "protocol": "HTTP/1.1",
+    "stage": "examplegoWC4I5I96GDL3",
+    "domainPrefix": "myapi",
+    "requestTimeEpoch": 1596141733001,
+    "requestId": "42a518ee-752d-499f-9fcb-660b21828f01",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "203.0.113.203",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "curl/7.58.0",
+      "user": null
+    },
+    "domainName": "myapi.example.com",
+    "apiId": "abcdefghij"
+  },
+  "body": "{\"email\": \"test@test.com\",\"password\":\"SomeRandomPassword123\"}",
+  "isBase64Encoded": false
+}

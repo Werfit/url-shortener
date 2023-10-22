@@ -1,0 +1,23 @@
+org: werfit
+app: typescript-http-api
+service: jwt-authorizer
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    JWT_SECRET: "very-secret-key"
+  httpApi:
+    cors:
+      allowedOrigins:
+        - "*"
+
+functions:
+  jwt-authorizer:
+    handler: handler.authorize
+
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript

@@ -1,0 +1,102 @@
+org: werfit
+app: typescript-http-api
+service: url-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  environment:
+    URL_HASH_TABLE: "url-hash-${sls:stage}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeStream
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:PutItem
+        - dynamodb:Query
+        - dynamodb:DeleteItem
+      Resource: "*"
+  httpApi:
+    cors:
+      allowedOrigins:
+        - "*"
+    authorizers:
+      jwtAuthorizer:
+        type: request
+        functionArn: arn:aws:lambda:us-east-1:018486252290:function:jwt-authorizer-dev-jwt-authorizer
+
+
+functions:
+  list-url:
+    handler: handler.listUrls
+    events:
+      - httpApi:
+          path: /all
+          method: get
+          authorizer:
+            name: jwtAuthorizer
+  create-url:
+    handler: handler.createUrl
+    events:
+      - httpApi:
+          path: /
+          method: post
+          authorizer:
+            name: jwtAuthorizer
+  visit-url:
+    handler: handler.visitUrl
+    events:
+      - httpApi:
+          path: /
+          method: get
+          authorizer:
+            name: jwtAuthorizer
+  deactivate-url:
+    handler: handler.deactivateUrl
+    events:
+      - httpApi:
+          path: /deactivate
+          method: post
+          authorizer:
+            name: jwtAuthorizer
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    UrlHashTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.URL_HASH_TABLE}
+        AttributeDefinitions:
+          - AttributeName: hash
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: hash
+            KeyType: HASH
+        TimeToLiveSpecification:
+          AttributeName: ttl
+          Enabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: emailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript

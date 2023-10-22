@@ -1,0 +1,70 @@
+org: werfit
+app: typescript-http-api
+service: authorization
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  environment:
+    USER_TABLE: "users-${sls:stage}"
+    JWT_SECRET: "very-secret-key"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource: "*"
+  httpApi:
+    cors:
+      allowedOrigins:
+        - "*"
+    authorizers:
+      jwtAuthorizer:
+        type: request
+        functionArn: arn:aws:lambda:us-east-1:018486252290:function:jwt-authorizer-dev-jwt-authorizer
+
+functions:
+  sign-up:
+    handler: handler.signUp
+    events:
+      - httpApi:
+          path: /sign-up
+          method: post
+  login:
+    handler: handler.login
+    events:
+      - httpApi:
+          path: /login
+          method: post
+  verify:
+    handler: handler.verify
+    events:
+      - httpApi:
+          path: /verify
+          method: get
+          authorizer:
+            name: jwtAuthorizer
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.USER_TABLE}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript

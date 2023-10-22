@@ -1,0 +1,26 @@
+{
+  "httpMethod": "POST",
+  "headers": {
+    "accept": "*/*",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNTE2MjM5MDIyfQ.pXM1_I7DtY-E02c75JRFm8D3TAYoU1SU3kXyhDv8qtY",
+    "content-type": "application/x-www-form-urlencoded",
+    "Host": "myapi.example.com",
+    "User-Agent": "curl/7.58.0",
+    "X-Amzn-Trace-Id": "Root=1-5f2330a4-6a0de1cd0e17c0508d386a64",
+    "X-Forwarded-For": "203.0.113.203",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "requestContext": {
+    "authorizer": {
+      "lambda": {
+        "email": "test@test.com"
+      }
+    }
+  },
+  "queryStringParameters": {
+    "hash": "0967d5"
+  },
+  "_body": "{\"url\": \"https://google.com\",\"expiration\":\"1d\"}",
+  "body": "{\"hash\": \"00025a\"}"
+}
